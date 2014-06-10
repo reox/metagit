@@ -3,6 +3,8 @@
 from optparse import OptionParser
 import sys
 import meta_commands
+import os
+import time
 
 parser = OptionParser()
 
@@ -11,7 +13,13 @@ commands = {'list': meta_commands.cmd_list, 'cd': meta_commands.cmd_cd, 'tags': 
 
 if __name__ == "__main__":
     options, args = parser.parse_args()
-    print(args)
+
+    # check for offline cache file existance or 5h age
+    if (not os.path.isfile("metagit_cache.json")) or (time.time() -
+            os.stat("metagit_cache.json").st_mtime) > 60*60*5:
+        print("Cache File is too old, syncing")
+        commands['sync']()
+
     if len(args) > 0 and args[0] in commands:
         commands[args[0]]()
     else:
