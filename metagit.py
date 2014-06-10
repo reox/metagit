@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 
-import glob
 from optparse import OptionParser
 import sys
 import meta_commands
 
 parser = OptionParser()
-
-repos = glob.glob("/home/reox/git/*/.git") + glob.glob("/home/reox/git/*/*/.git")
 
 commands = {'list': meta_commands.cmd_list, 'cd': meta_commands.cmd_cd, 'tags': meta_commands.cmd_tags, 'find': meta_commands.cmd_find, 'sync': meta_commands.cmd_sync}
 
